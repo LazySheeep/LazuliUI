@@ -1,0 +1,6 @@
+name: UIManager
+version: 1.0.0
+main: io.lazysheeep.mczju.uimanager.UIManager
+description: Plugin for UI and messages
+author: LazySheeep
+api-version: '1.19'

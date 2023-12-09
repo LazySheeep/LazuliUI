@@ -3,7 +3,7 @@ package io.lazysheeep.uimanager;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
-public class Util
+class Util
 {
     static public int getTextComponentLength(TextComponent component)
     {

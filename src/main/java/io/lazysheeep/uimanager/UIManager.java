@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class UIManager extends JavaPlugin implements Listener
@@ -33,7 +32,7 @@ public class UIManager extends JavaPlugin implements Listener
         plugin.getServer().getPluginManager().registerEvents(ui, plugin);
     }
 
-    public UI getPlayerUI(Player player)
+    static public UI getPlayerUI(Player player)
     {
         for(MetadataValue metaData : player.getMetadata("UI"))
         {
@@ -43,22 +42,22 @@ public class UIManager extends JavaPlugin implements Listener
         return null;
     }
 
-    public void sendMessage(Player player, Message message)
+    static public void sendMessage(Player player, Message message)
     {
         getPlayerUI(player).sendMessage(message);
     }
 
-    public void sendMessage(Player player, Message.Type type, TextComponent content, Message.LoadMode loadMode, int lifeTime)
+    static public void sendMessage(Player player, Message.Type type, TextComponent content, Message.LoadMode loadMode, int lifeTime)
     {
         getPlayerUI(player).sendMessage(new Message(type, content, loadMode, lifeTime));
     }
 
-    public void broadcastMessage(String permission, Message message)
+    static public void broadcastMessage(String permission, Message message)
     {
         // TODO
     }
 
-    public void flush(Player player, Message.Type... types)
+    static public void flush(Player player, Message.Type... types)
     {
         getPlayerUI(player).flush(types);
     }

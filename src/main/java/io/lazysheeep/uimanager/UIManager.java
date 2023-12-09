@@ -44,12 +44,16 @@ public class UIManager extends JavaPlugin implements Listener
 
     static public void sendMessage(Player player, Message message)
     {
-        getPlayerUI(player).sendMessage(message);
+        UI ui = getPlayerUI(player);
+        if(ui != null)
+            ui.sendMessage(message);
     }
 
     static public void sendMessage(Player player, Message.Type type, TextComponent content, Message.LoadMode loadMode, int lifeTime)
     {
-        getPlayerUI(player).sendMessage(new Message(type, content, loadMode, lifeTime));
+        UI ui = getPlayerUI(player);
+        if(ui != null)
+            ui.sendMessage(new Message(type, content, loadMode, lifeTime));
     }
 
     static public void broadcastMessage(String permission, Message message)
@@ -59,7 +63,9 @@ public class UIManager extends JavaPlugin implements Listener
 
     static public void flush(Player player, Message.Type... types)
     {
-        getPlayerUI(player).flush(types);
+        UI ui = getPlayerUI(player);
+        if(ui != null)
+            ui.flush(types);
     }
 
 }

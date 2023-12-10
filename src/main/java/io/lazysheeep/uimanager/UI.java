@@ -3,22 +3,24 @@ package io.lazysheeep.uimanager;
 import com.destroystokyo.paper.event.server.ServerTickStartEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class UI implements Listener
+class UI implements Listener
 {
     private final Player player;
     private final LinkedList<Message> messageList = new LinkedList<>();
     private final Message[] messagesOnStage = new Message[Message.Type.values().length];
     private int actionbarInfixWidth = 0;
 
-    public UI(Player player)
+    public UI(@NotNull Player player)
     {
         this.player = player;
     }
@@ -28,7 +30,7 @@ public class UI implements Listener
         this.actionbarInfixWidth = width;
     }
 
-    public void sendMessage(Message message)
+    public void sendMessage(@NotNull Message message)
     {
         this.messageList.offerLast(message);
     }
@@ -62,11 +64,35 @@ public class UI implements Listener
             }
         }
 
-        // send message
+        // actual send messages
+        this.draw();
+
+        // update or unload the messagesOnStage
+        for(int i = 0; i < messagesOnStage.length; i ++)
+        {
+            if(messagesOnStage[i] != null)
+            {
+                // set sent to true
+                messagesOnStage[i].sent = true;
+                // update lifeTime
+                if(messagesOnStage[i].lifeTime > 0)
+                    messagesOnStage[i].lifeTime --;
+                // unload if lifeTime is 0
+                if(messagesOnStage[i].lifeTime == 0)
+                    messagesOnStage[i] = null;
+            }
+        }
+    }
+
+    private void draw()
+    {
         // chat
         Message chatMessage = this.messagesOnStage[Message.Type.CHAT.ordinal()];
         if(chatMessage != null && !chatMessage.sent)
+        {
             this.player.sendMessage(chatMessage.content);
+            if(chatMessage.tone != null) this.player.playSound(this.player, chatMessage.tone, SoundCategory.MASTER, 1.0f, 1.0f);
+        }
 
         // actionbar
         Message actionbarPrefix = this.messagesOnStage[Message.Type.ACTIONBAR_PREFIX.ordinal()];
@@ -98,21 +124,8 @@ public class UI implements Listener
             actionbarComponent = actionbarComponent.append(Component.text("*".repeat(suffixPaddingLength)));
 
         player.sendActionBar(actionbarComponent);
-
-        // update or unload the messagesOnStage
-        for(int i = 0; i < messagesOnStage.length; i ++)
-        {
-            if(messagesOnStage[i] != null)
-            {
-                // set sent to true
-                messagesOnStage[i].sent = true;
-                // update lifeTime
-                if(messagesOnStage[i].lifeTime > 0)
-                    messagesOnStage[i].lifeTime --;
-                // unload if lifeTime is 0
-                if(messagesOnStage[i].lifeTime == 0)
-                    messagesOnStage[i] = null;
-            }
-        }
+        if(actionbarPrefix != null && !actionbarPrefix.sent && actionbarPrefix.tone != null) this.player.playSound(this.player, actionbarPrefix.tone, SoundCategory.MASTER, 1.0f, 1.0f);
+        if(actionbarInfix != null && !actionbarInfix.sent && actionbarInfix.tone != null) this.player.playSound(this.player, actionbarInfix.tone, SoundCategory.MASTER, 1.0f, 1.0f);
+        if(actionbarSuffix != null && !actionbarSuffix.sent && actionbarSuffix.tone != null) this.player.playSound(this.player, actionbarSuffix.tone, SoundCategory.MASTER, 1.0f, 1.0f);
     }
 }

@@ -32,7 +32,15 @@ class UI implements Listener
 
     public void sendMessage(@NotNull Message message)
     {
-        this.messageList.offerLast(message);
+        if(message.type == Message.Type.CHAT && message.loadMode == Message.LoadMode.IMMEDIATE)
+        {
+            this.player.sendMessage(message.content);
+            if(message.tone != null) this.player.playSound(this.player, message.tone, SoundCategory.MASTER, 1.0f, 1.0f);
+        }
+        else
+        {
+            this.messageList.offerLast(message);
+        }
     }
 
     public void flush(Message.Type... types)

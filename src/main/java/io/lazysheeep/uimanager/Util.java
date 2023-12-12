@@ -22,6 +22,8 @@ class Util
                 width += 0.25f;
             else if(ascii == '[' || ascii == ']')
                 width += 0.5f;
+            else if(ascii == '<' || ascii == '>')
+                width += 0.75f;
             else if(ascii >= 0 && ascii <= 255)
                 width += 1.0f;
             else

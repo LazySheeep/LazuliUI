@@ -98,30 +98,30 @@ class UI implements Listener
         Message actionbarPrefix = this.messagesOnStage[Message.Type.ACTIONBAR_PREFIX.ordinal()];
         Message actionbarInfix = this.messagesOnStage[Message.Type.ACTIONBAR_INFIX.ordinal()];
         Message actionbarSuffix = this.messagesOnStage[Message.Type.ACTIONBAR_SUFFIX.ordinal()];
-        int prefixLength = actionbarPrefix == null ? 0 : Util.getTextComponentLength(actionbarPrefix.content);
-        int infixLength = actionbarInfix == null ? 0 : Util.getTextComponentLength(actionbarInfix.content);
-        int suffixLength = actionbarSuffix == null ? 0 : Util.getTextComponentLength(actionbarSuffix.content);
-        int prefixPaddingLength = Math.max(prefixLength, suffixLength) - prefixLength;
-        int infixPaddingLength = Math.max(this.actionbarInfixWidth - infixLength, 0);
-        int suffixPaddingLength = Math.max(prefixLength, suffixLength) - suffixLength;
+        int prefixWidth = actionbarPrefix == null ? 0 : Util.getTextComponentWidth(actionbarPrefix.content);
+        int infixWidth = actionbarInfix == null ? 0 : Util.getTextComponentWidth(actionbarInfix.content);
+        int suffixWidth = actionbarSuffix == null ? 0 : Util.getTextComponentWidth(actionbarSuffix.content);
+        int prefixPaddingLength = Math.max(prefixWidth, suffixWidth) - prefixWidth;
+        int infixPaddingLength = Math.max(this.actionbarInfixWidth - infixWidth, 0);
+        int suffixPaddingLength = Math.max(prefixWidth, suffixWidth) - suffixWidth;
         TextComponent actionbarComponent = Component.text("");
         // prefix
         if(prefixPaddingLength > 0)
-            actionbarComponent = actionbarComponent.append(Component.text("*".repeat(prefixPaddingLength)));
-        if(prefixLength > 0)
+            actionbarComponent = actionbarComponent.append(Component.text(" ".repeat(prefixPaddingLength)));
+        if(prefixWidth > 0)
             actionbarComponent = actionbarComponent.append(actionbarPrefix.content);
         // infix
         if(infixPaddingLength > 0)
-            actionbarComponent = actionbarComponent.append(Component.text("_".repeat(infixPaddingLength/2)));
-        if(infixLength > 0)
+            actionbarComponent = actionbarComponent.append(Component.text(" ".repeat(infixPaddingLength/2)));
+        if(infixWidth > 0)
             actionbarComponent = actionbarComponent.append(actionbarInfix.content);
         if(infixPaddingLength > 0)
-            actionbarComponent = actionbarComponent.append(Component.text("_".repeat(infixPaddingLength-infixPaddingLength/2)));
+            actionbarComponent = actionbarComponent.append(Component.text(" ".repeat(infixPaddingLength-infixPaddingLength/2)));
         // suffix
-        if(suffixLength > 0)
+        if(suffixWidth > 0)
             actionbarComponent = actionbarComponent.append(actionbarSuffix.content);
         if(suffixPaddingLength > 0)
-            actionbarComponent = actionbarComponent.append(Component.text("*".repeat(suffixPaddingLength)));
+            actionbarComponent = actionbarComponent.append(Component.text(" ".repeat(suffixPaddingLength)));
 
         player.sendActionBar(actionbarComponent);
         if(actionbarPrefix != null && !actionbarPrefix.sent && actionbarPrefix.tone != null) this.player.playSound(this.player, actionbarPrefix.tone, SoundCategory.MASTER, 1.0f, 1.0f);

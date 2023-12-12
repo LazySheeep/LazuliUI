@@ -7,20 +7,26 @@ class Util
 {
     static public int getTextComponentLength(TextComponent component)
     {
-        return getStringLength(PlainTextComponentSerializer.plainText().serialize(component));
+        return PlainTextComponentSerializer.plainText().serialize(component).length();
     }
 
-    static public int getStringLength(String s)
+    static public int getTextComponentWidth(TextComponent component)
     {
-        int length = 0;
-        for(int i = 0; i < s.length(); i++)
+        float width = 0.0f;
+        String str = PlainTextComponentSerializer.plainText().serialize(component);
+        for(int i = 0; i < str.length(); i++)
         {
-            int ascii = Character.codePointAt(s, i);
-            if(ascii >= 0 && ascii <=255)
-                length ++;
+            int ascii = Character.codePointAt(str, i);
+
+            if(ascii == '|')
+                width += 0.25f;
+            else if(ascii == '[' || ascii == ']')
+                width += 0.5f;
+            else if(ascii >= 0 && ascii <= 255)
+                width += 1.0f;
             else
-                length += 2;
+                width += 2.0f;
         }
-        return length;
+        return (int)Math.ceil(width);
     }
 }

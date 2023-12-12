@@ -1,5 +1,6 @@
 package io.lazysheeep.uimanager;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Sound;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +20,15 @@ public class Message
     {
         this.type = type;
         this.content = content;
+        this.tone = null;
+        this.loadMode = loadMode;
+        this.lifeTime = lifeTime;
+    }
+
+    public Message(@NotNull Type type, @NotNull String content, @NotNull LoadMode loadMode, int lifeTime)
+    {
+        this.type = type;
+        this.content = Component.text(content);
         this.tone = null;
         this.loadMode = loadMode;
         this.lifeTime = lifeTime;

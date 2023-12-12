@@ -54,9 +54,7 @@ public class UIManager extends JavaPlugin implements Listener
 
     static public void sendMessage(@NotNull Player player, @NotNull TextComponent content)
     {
-        UI ui = getPlayerUI(player);
-        if(ui != null)
-            ui.sendMessage(new Message(Message.Type.CHAT, content, Message.LoadMode.REPLACE, 1));
+        sendMessage(player, new Message(Message.Type.CHAT, content, Message.LoadMode.REPLACE, 1));
     }
 
     static public void broadcast(@NotNull String permission, @NotNull Message message)
@@ -66,6 +64,11 @@ public class UIManager extends JavaPlugin implements Listener
             if(player.hasPermission(permission))
                 sendMessage(player, message);
         }
+    }
+
+    static public void broadcast(@NotNull String permission, @NotNull TextComponent content)
+    {
+        broadcast(permission, new Message(Message.Type.CHAT, content, Message.LoadMode.REPLACE, 1));
     }
 
     static public void flush(@NotNull Player player)

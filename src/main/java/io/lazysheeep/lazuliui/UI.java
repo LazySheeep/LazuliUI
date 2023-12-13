@@ -1,4 +1,4 @@
-package io.lazysheeep.uimanager;
+package io.lazysheeep.lazuliui;
 
 import com.destroystokyo.paper.event.server.ServerTickStartEvent;
 import net.kyori.adventure.text.Component;

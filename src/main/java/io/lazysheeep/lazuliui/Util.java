@@ -1,4 +1,4 @@
-package io.lazysheeep.uimanager;
+package io.lazysheeep.lazuliui;
 
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;

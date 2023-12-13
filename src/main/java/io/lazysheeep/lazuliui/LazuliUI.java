@@ -1,4 +1,4 @@
-package io.lazysheeep.uimanager;
+package io.lazysheeep.lazuliui;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,9 +17,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UIManager extends JavaPlugin implements Listener
+public class LazuliUI extends JavaPlugin implements Listener
 {
-    public static UIManager plugin;
+    public static LazuliUI plugin;
     public Logger logger;
     private int actionbarInfixWidth;
 

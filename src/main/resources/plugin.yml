@@ -1,6 +1,6 @@
-name: UIManager
+name: LazuliUI
 version: 1.0.0
-main: io.lazysheeep.uimanager.UIManager
+main: io.lazysheeep.lazuliui.LazuliUI
 description: Plugin for UI and messages
 author: LazySheeep
 api-version: '1.19'

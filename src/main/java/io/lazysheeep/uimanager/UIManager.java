@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,6 +65,14 @@ public class UIManager extends JavaPlugin implements Listener
             ui.sendMessage(message);
     }
 
+    static public void sendMessage(@NotNull Player player, @NotNull List<Message> messages)
+    {
+        for(Message message : messages)
+        {
+            sendMessage(player, message);
+        }
+    }
+
     static public void sendMessage(@NotNull Player player, @NotNull TextComponent content)
     {
         sendMessage(player, new Message(Message.Type.CHAT, content, Message.LoadMode.IMMEDIATE, 1));
@@ -81,6 +90,14 @@ public class UIManager extends JavaPlugin implements Listener
     static public void broadcast(@NotNull String permission, @NotNull TextComponent content)
     {
         broadcast(permission, new Message(Message.Type.CHAT, content, Message.LoadMode.IMMEDIATE, 1));
+    }
+
+    static public void broadcast(@NotNull String permission, @NotNull List<Message> messages)
+    {
+        for(Message message : messages)
+        {
+            broadcast(permission, message);
+        }
     }
 
     static public void flush(@NotNull Player player)

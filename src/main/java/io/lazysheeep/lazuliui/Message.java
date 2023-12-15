@@ -42,4 +42,13 @@ public class Message
         this.loadMode = loadMode;
         this.lifeTime = lifeTime;
     }
+
+    public Message(@NotNull TextComponent content)
+    {
+        this.type = Type.CHAT;
+        this.content = content;
+        this.tone = null;
+        this.loadMode = LoadMode.IMMEDIATE;
+        this.lifeTime = 1;
+    }
 }

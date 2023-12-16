@@ -6,6 +6,7 @@ I'm new to plugin development. And for now this is basically just a message mana
 
 ## How to include
 [![](https://jitpack.io/v/LazySheeep/LazuliUI.svg)](https://jitpack.io/#LazySheeep/LazuliUI)
+
 To include with gradle:
 ```groovy
 repositories {

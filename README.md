@@ -15,6 +15,6 @@ repositories {
     }
 }
 dependencies {
-    implementation 'com.github.LazySheeep:LazuliUI:0.5.0'
+    implementation 'com.github.LazySheeep:LazuliUI:0.5.1'
 }
 ```

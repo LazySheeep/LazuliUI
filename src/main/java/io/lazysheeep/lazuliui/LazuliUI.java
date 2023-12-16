@@ -52,11 +52,25 @@ public class LazuliUI extends JavaPlugin implements Listener
         return null;
     }
 
+    /**
+     * Set the width of the actionbar infix.
+     * <p>
+     * If the message being displayed is shorter than the set width, spaces will be filled,
+     * to keep the position of prefix and suffix.
+     *
+     * @param width the width in characters
+     */
     static public void setActionbarInfixWidth(int width)
     {
         plugin.actionbarInfixWidth = width;
     }
 
+    /**
+     * Send a message to player.
+     *
+     * @param player the player to send the message
+     * @param message the message to send
+     */
     static public void sendMessage(@NotNull Player player, @NotNull Message message)
     {
         UI ui = getPlayerUI(player);
@@ -64,6 +78,12 @@ public class LazuliUI extends JavaPlugin implements Listener
             ui.sendMessage(message);
     }
 
+    /**
+     * Send a series of messages to player.
+     *
+     * @param player the player to send the messages
+     * @param messages the messages to send
+     */
     static public void sendMessage(@NotNull Player player, @NotNull List<Message> messages)
     {
         for(Message message : messages)
@@ -72,11 +92,37 @@ public class LazuliUI extends JavaPlugin implements Listener
         }
     }
 
+    /**
+     * Send a simple message to player.<br>
+     * The message will be treated as an immediate chat message.
+     *
+     * @param player the player to send the message
+     * @param content the content of the message
+     */
     static public void sendMessage(@NotNull Player player, @NotNull TextComponent content)
     {
         sendMessage(player, new Message(Message.Type.CHAT, content, Message.LoadMode.IMMEDIATE, 1));
     }
 
+    /**
+     * Broadcast a message to all online players.
+     *
+     * @param message the message to broadcast
+     */
+    static public void broadcast(@NotNull Message message)
+    {
+        for(Player player : Bukkit.getServer().getOnlinePlayers())
+        {
+            sendMessage(player, message);
+        }
+    }
+
+    /**
+     * Broadcast a message to the players with the specified permission.
+     *
+     * @param permission the required permission to receive the message
+     * @param message the message to broadcast
+     */
     static public void broadcast(@NotNull String permission, @NotNull Message message)
     {
         for(Player player : Bukkit.getServer().getOnlinePlayers())
@@ -86,11 +132,24 @@ public class LazuliUI extends JavaPlugin implements Listener
         }
     }
 
+    /**
+     * Broadcast a simple message to the players with the specified permission.<br>
+     * The message will be treated as an immediate chat message.
+     *
+     * @param permission the required permission to receive the message
+     * @param content the content of the message
+     */
     static public void broadcast(@NotNull String permission, @NotNull TextComponent content)
     {
         broadcast(permission, new Message(Message.Type.CHAT, content, Message.LoadMode.IMMEDIATE, 1));
     }
 
+    /**
+     * Broadcast a series of messages to the players with the specified permission.
+     *
+     * @param permission the required permission to receive the message
+     * @param messages the messages to broadcast
+     */
     static public void broadcast(@NotNull String permission, @NotNull List<Message> messages)
     {
         for(Message message : messages)
@@ -99,11 +158,21 @@ public class LazuliUI extends JavaPlugin implements Listener
         }
     }
 
+    /**
+     * Clear messages of player, both those being displayed and those in queue.
+     *
+     * @param player the player
+     */
     static public void flush(@NotNull Player player)
     {
         flush(player, Message.Type.values());
     }
 
+    /**
+     * Clear messages of players with the specified permission, both those being displayed and those in queue.
+     *
+     * @param permission the specified permission
+     */
     static public void flush(@NotNull String permission)
     {
         for(Player player : Bukkit.getServer().getOnlinePlayers())
@@ -113,6 +182,13 @@ public class LazuliUI extends JavaPlugin implements Listener
         }
     }
 
+    /**
+     * Clear messages of player, both those being displayed and those in queue.
+     * Only the specified type of messages will be flushed.
+     *
+     * @param player the player
+     * @param types the types of messages to flush
+     */
     static public void flush(@NotNull Player player, @NotNull Message.Type... types)
     {
         UI ui = getPlayerUI(player);
@@ -120,6 +196,13 @@ public class LazuliUI extends JavaPlugin implements Listener
             ui.flush(types);
     }
 
+    /**
+     * Clear messages of players with the specified permission, both those being displayed and those in queue.
+     * Only the specified type of messages will be flushed.
+     *
+     * @param permission the specified permission
+     * @param types the types of messages to flush
+     */
     static public void flush(@NotNull String permission, @NotNull Message.Type... types)
     {
         for(Player player : Bukkit.getServer().getOnlinePlayers())

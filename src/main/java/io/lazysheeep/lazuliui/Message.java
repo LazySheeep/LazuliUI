@@ -5,7 +5,7 @@ import org.bukkit.Sound;
 import org.jetbrains.annotations.NotNull;
 
 
-public class Message
+public class Message implements Cloneable
 {
     /**
      * The type, or the display position, of the message.<br>
@@ -82,5 +82,22 @@ public class Message
         this.tone = null;
         this.loadMode = LoadMode.IMMEDIATE;
         this.lifeTime = 1;
+    }
+
+    /**
+     * Shallow clone
+     * @return clone
+     */
+    @Override
+    public Message clone()
+    {
+        try
+        {
+            return (Message) super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            throw new AssertionError();
+        }
     }
 }

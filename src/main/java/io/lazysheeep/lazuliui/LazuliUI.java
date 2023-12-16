@@ -93,18 +93,6 @@ public class LazuliUI extends JavaPlugin implements Listener
     }
 
     /**
-     * Send a simple message to player.<br>
-     * The message will be treated as an immediate chat message.
-     *
-     * @param player the player to send the message
-     * @param content the content of the message
-     */
-    static public void sendMessage(@NotNull Player player, @NotNull TextComponent content)
-    {
-        sendMessage(player, new Message(Message.Type.CHAT, content, Message.LoadMode.IMMEDIATE, 1));
-    }
-
-    /**
      * Broadcast a message to all online players.
      *
      * @param message the message to broadcast
@@ -113,7 +101,7 @@ public class LazuliUI extends JavaPlugin implements Listener
     {
         for(Player player : Bukkit.getServer().getOnlinePlayers())
         {
-            sendMessage(player, message);
+            sendMessage(player, message.clone());
         }
     }
 
@@ -128,20 +116,8 @@ public class LazuliUI extends JavaPlugin implements Listener
         for(Player player : Bukkit.getServer().getOnlinePlayers())
         {
             if(player.hasPermission(permission))
-                sendMessage(player, message);
+                sendMessage(player, message.clone());
         }
-    }
-
-    /**
-     * Broadcast a simple message to the players with the specified permission.<br>
-     * The message will be treated as an immediate chat message.
-     *
-     * @param permission the required permission to receive the message
-     * @param content the content of the message
-     */
-    static public void broadcast(@NotNull String permission, @NotNull TextComponent content)
-    {
-        broadcast(permission, new Message(Message.Type.CHAT, content, Message.LoadMode.IMMEDIATE, 1));
     }
 
     /**
@@ -154,7 +130,7 @@ public class LazuliUI extends JavaPlugin implements Listener
     {
         for(Message message : messages)
         {
-            broadcast(permission, message);
+            broadcast(permission, message.clone());
         }
     }
 

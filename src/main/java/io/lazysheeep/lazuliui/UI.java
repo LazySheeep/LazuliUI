@@ -52,7 +52,7 @@ class UI implements Listener
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onServerTickStartEvent(ServerTickStartEvent event)
     {
         // load message from messageList

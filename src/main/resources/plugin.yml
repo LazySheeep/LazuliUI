@@ -1,6 +1,6 @@
 name: LazuliUI
-version: 0.5.3
+version: '${version}'
 main: io.lazysheeep.lazuliui.LazuliUI
 description: Plugin for UI and messages
 author: LazySheeep
-api-version: '1.19'
+api-version: '1.21'

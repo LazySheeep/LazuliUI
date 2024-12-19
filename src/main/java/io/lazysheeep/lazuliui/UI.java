@@ -1,33 +1,23 @@
 package io.lazysheeep.lazuliui;
 
-import com.destroystokyo.paper.event.server.ServerTickStartEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-class UI implements Listener
+class UI
 {
     private final Player player;
     private final LinkedList<Message> messageList = new LinkedList<>();
     private final Message[] messagesOnStage = new Message[Message.Type.values().length];
-    private int actionbarInfixWidth = 0;
 
     public UI(@NotNull Player player)
     {
         this.player = player;
-    }
-
-    public void setActionbarInfixWidth(int width)
-    {
-        this.actionbarInfixWidth = width;
     }
 
     public void sendMessage(@NotNull Message message)
@@ -52,8 +42,7 @@ class UI implements Listener
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onServerTickStartEvent(ServerTickStartEvent event)
+    public void tick()
     {
         // load message from messageList
         for(Iterator<Message> it = this.messageList.iterator(); it.hasNext(); )
@@ -110,7 +99,7 @@ class UI implements Listener
         int infixWidth = actionbarInfix == null ? 0 : Util.getTextComponentWidth(actionbarInfix.content);
         int suffixWidth = actionbarSuffix == null ? 0 : Util.getTextComponentWidth(actionbarSuffix.content);
         int prefixPaddingLength = Math.max(prefixWidth, suffixWidth) - prefixWidth;
-        int infixPaddingLength = Math.max(this.actionbarInfixWidth - infixWidth, 0);
+        int infixPaddingLength = Math.max(LazuliUI.actionbarInfixWidth - infixWidth, 0);
         int suffixPaddingLength = Math.max(prefixWidth, suffixWidth) - suffixWidth;
         TextComponent actionbarComponent = Component.text("");
         // prefix

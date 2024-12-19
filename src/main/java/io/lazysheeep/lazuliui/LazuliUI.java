@@ -1,6 +1,6 @@
 package io.lazysheeep.lazuliui;
 
-import net.kyori.adventure.text.TextComponent;
+import com.destroystokyo.paper.event.server.ServerTickStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,17 +19,24 @@ import java.util.logging.Logger;
 
 public class LazuliUI extends JavaPlugin implements Listener
 {
-    public static LazuliUI plugin;
-    public Logger logger;
-    private int actionbarInfixWidth;
+    private static LazuliUI instance;
+
+    static final int actionbarInfixWidth = 32;
 
     @Override
     public void onEnable()
     {
-        plugin = this;
-        logger = this.getLogger();
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            getLogger().log(Level.SEVERE, "Multiple instances of LazuliUI detected, disabling current one...");
+            return;
+        }
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
-        logger.log(Level.INFO, "Enabled");
+        getLogger().log(Level.INFO, "Enabled");
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -37,32 +44,28 @@ public class LazuliUI extends JavaPlugin implements Listener
     {
         Player player = event.getPlayer();
         UI ui = new UI(player);
-        ui.setActionbarInfixWidth(actionbarInfixWidth);
-        player.setMetadata("UI", new FixedMetadataValue(plugin, ui));
-        Bukkit.getServer().getPluginManager().registerEvents(ui, plugin);
+        player.setMetadata("UI", new FixedMetadataValue(instance, ui));
     }
 
-    static @Nullable UI getPlayerUI(@NotNull Player player)
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onServerTickStart(@NotNull ServerTickStartEvent event)
+    {
+        for(Player player : Bukkit.getServer().getOnlinePlayers())
+        {
+            UI ui = getPlayerUI(player);
+            if(ui != null)
+                ui.tick();
+        }
+    }
+
+    private static @Nullable UI getPlayerUI(@NotNull Player player)
     {
         for(MetadataValue metaData : player.getMetadata("UI"))
         {
-            if(metaData.getOwningPlugin() == plugin && metaData.value() instanceof UI ui)
+            if(metaData.getOwningPlugin() == instance && metaData.value() instanceof UI ui)
                 return ui;
         }
         return null;
-    }
-
-    /**
-     * Set the width of the actionbar infix.
-     * <p>
-     * If the message being displayed is shorter than the set width, spaces will be filled,
-     * to keep the position of prefix and suffix.
-     *
-     * @param width the width in characters
-     */
-    static public void setActionbarInfixWidth(int width)
-    {
-        plugin.actionbarInfixWidth = width;
     }
 
     /**
